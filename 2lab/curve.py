@@ -1,14 +1,19 @@
 import numpy as np
 
+
+class Point:
+    def __init__(self, x: float, y: float, z: float):
+     self.x = x
+     self.y = y
+     self.z = z
 class Curve:
-    def __init__(self, x: 'function', y: 'function', z: 'function', t: int):
+    def __init__(self, x: 'function', y: 'function', z: 'function', start: int, finish: int):
         self.x = x
         self.y = y
         self.z = z
-        t1 = np.linspace(0, t, t * 1000)
-        self.x_axes = np.array([x(i) for i in t1])
-        self.y_axes = np.array([y(i) for i in t1])
-        self.z_axes = np.array([z(i) for i in t1])
+        t1 = np.linspace(start, finish, finish * 1000)
+        self.points = np.array(Point(x[i], y[i], z[i]) for i in t1)
+        
     def vector_product(self, other, t):
         coord1 = (self.x(t), self.y(t), self.z(t))
         coord2 = (other.x(t), other.y(t), other.z(t))
@@ -28,8 +33,8 @@ def y(t):
 def z(t):
     return 3*t + 2
 
-if __name__ == '__main__':
-    a = Curve(x, y, z, 5)
-    print(a.scalar_product)
 
+if __name__ == '__main__':
+    a = Curve(x, y, z,0, 1)
+    print(a.points[0])
 
